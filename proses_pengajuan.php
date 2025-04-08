@@ -31,7 +31,7 @@ $stmt = mysqli_prepare($db, $sql);
 mysqli_stmt_bind_param($stmt, "isssssd", $user_id, $nama, $kontak, $judul, $kategori, $deskripsi, $target);
 
 if (mysqli_stmt_execute($stmt)) {
-    echo "<script>alert('Pengajuan Donasi Berhasil!'); window.location='dashboard.php';</script>";
+    echo "<script>alert('Pengajuan Donasi Berhasil!'); window.location='user_dashboard.php';</script>";
 } else {
     echo "<script>alert('Gagal mengajukan donasi. Coba lagi!');</script>";
 }

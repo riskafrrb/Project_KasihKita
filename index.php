@@ -23,10 +23,34 @@ $result = $db->query("SELECT * FROM pengajuan_donasi WHERE status = 'Disetujui'"
             padding: 12px 20px;
         }
         .hero-section {
-            text-align: center;
-            padding: 120px 20px 80px;
-            background-color: #f8f9fa;
-        }
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    background-image: url('images/batik.jpg'); /* Ganti path kalau beda */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: relative;
+}
+/* Lapisan putih transparan agar teks terlihat */
+.hero-section::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(255, 255, 255, 0.85);
+    z-index: 1;
+    border-radius: 0;
+}
+
+/* Pastikan isi di atas layer transparan */
+.hero-section > * {
+    position: relative;
+    z-index: 2;
+}
         .hero-section h1 {
             font-size: 3rem;
             font-weight: bold;
@@ -47,11 +71,70 @@ $result = $db->query("SELECT * FROM pengajuan_donasi WHERE status = 'Disetujui'"
         .btn-primary:hover {
             background-color: #138496;
         }
+        .bantu-section {
+    min-height: 70vh; /* atau pakai min-height */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    background-image: url('images/batik.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: relative;
+    color: white;
+}
+        
+/* Optional: kasih overlay putih transparan jika ingin teks tetap terbaca */
+.bantu-section::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(255, 255, 255, 0.85);
+    z-index: 1;
+}
+
+.bantu-section > * {
+    position: relative;
+    z-index: 2;
+}
         .donasi-card {
             border: none;
+            color: #000; /* Warna hitam */
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
+        .bantu-section h2 {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #1a1a1a;
+}
+.donasi-wrapper {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 10px;
+    padding-left: 10px;
+}
+
+.donasi-wrapper::-webkit-scrollbar {
+    height: 8px;
+}
+
+.donasi-wrapper::-webkit-scrollbar-thumb {
+    background-color: rgba(0,0,0,0.2);
+    border-radius: 4px;
+}
+
+.donasi-card {
+    flex: 0 0 auto;
+    width: 300px;
+    scroll-snap-align: start;
+}
+
     </style>
 </head>
 <body>
@@ -130,25 +213,27 @@ $result = $db->query("SELECT * FROM pengajuan_donasi WHERE status = 'Disetujui'"
   </div>
 </section>
 
-    <!-- Daftar Donasi -->
-    <div class="container mt-5">
-        <h2 class="font-weight-bold text-center">Bantu Mereka</h2>
-        <div class="row mt-4">
-            <?php while ($row = $result->fetch_assoc()) { ?>
-                <div class="col-md-4">
-                    <div class="card donasi-card">
-                        <div class="card-body">
-                            <h5 class="card-title"><?= htmlspecialchars($row["judul_donasi"]) ?></h5>
-                            <p class="card-text"><strong>Kategori:</strong> <?= htmlspecialchars($row["kategori"]) ?></p>
-                            <p class="card-text"><strong>Target:</strong> Rp <?= number_format($row["target_donasi"], 2, ",", ".") ?></p>
-                            <p class="card-text"><?= nl2br(htmlspecialchars($row["deskripsi"])) ?></p>
-                            <a href="detail_donasi.php?id=<?= $row["id"] ?>" class="btn btn-info btn-sm">Lihat Detail</a>
-                        </div>
-                    </div>
-                </div>
-            <?php } ?>
+    <!-- Tampilan Donasi -->
+    <section class="bantu-section">
+    <h2 class="display-4 font-weight-bold text-info mb-4">Bantu Mereka</h2>
+    <div class="container">
+    <div class="donasi-wrapper mt-4">
+    <?php while ($row = $result->fetch_assoc()) { ?>
+        <div class="card donasi-card mx-2">
+            <div class="card-body">
+                <h5 class="card-title"><?= htmlspecialchars($row["judul_donasi"]) ?></h5>
+                <p class="card-text"><strong>Kategori:</strong> <?= htmlspecialchars($row["kategori"]) ?></p>
+                <p class="card-text"><strong>Target:</strong> Rp <?= number_format($row["target_donasi"], 2, ",", ".") ?></p>
+                <p class="card-text"><?= nl2br(htmlspecialchars($row["deskripsi"])) ?></p>
+                <a href="detail_donasi.php?id=<?= $row["id"] ?>" class="btn btn-info btn-sm">Lihat Detail</a>
+            </div>
         </div>
+    <?php } ?>
+</div>
+
     </div>
+</section>
+
     
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
