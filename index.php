@@ -24,7 +24,7 @@ $result = $db->query("SELECT * FROM pengajuan_donasi WHERE status = 'Disetujui'"
         }
         .hero-section {
             text-align: center;
-            padding: 80px 20px;
+            padding: 120px 20px 80px;
             background-color: #f8f9fa;
         }
         .hero-section h1 {
@@ -55,35 +55,84 @@ $result = $db->query("SELECT * FROM pengajuan_donasi WHERE status = 'Disetujui'"
     </style>
 </head>
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
-        <div class="container">
-            <a class="navbar-brand font-weight-bold" href="#">Kasih Kita</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item"><a class="nav-link btn btn-outline-info" href="index.php">Home</a></li>
-                    <li class="nav-item"><a class="nav-link btn btn-outline-success ml-2" href="login.php">Login</a></li>
-                    <li class="nav-item"><a class="nav-link btn btn-outline-primary ml-2" href="register.php">Register</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top">
+  <div class="container">
+    <a class="navbar-brand text-info font-weight-bold" href="#">kasihkita</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto font-weight-bold">
+        <li class="nav-item">
+          <a class="nav-link" href="index.php">Beranda</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#about">Tentang Kami</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="login.php">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="register.php">Register</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
 
     <!-- Hero Section -->
     <section class="hero-section">
-        <h1>Selamat Datang 👋</h1>
+        <h1>Selamat Datang👋</h1>
         <h1>Kasih Kita</h1>
-        <p><strong>Platform Donasi & Kemanusiaan</strong></p>
+        <p class="text-info"><strong>Platform Donasi & Kemanusiaan</strong></p>
         <p>Bersama kita bisa membuat perubahan. <strong>Mari bantu mereka yang membutuhkan!</strong></p>
-        <a href="kontak.php" class="btn btn-primary">Hubungi Kami</a>
+        <a href="login.php" class="btn btn-primary">Login</a>
     </section>
+
+    <!-- About Section Start -->
+    <section id="about" class="py-5" style="background-color: #0b1f47; color: white;">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6 mb-4 mb-lg-0">
+        <h4 class="text-info font-weight-bold">Tentang Kami</h4>
+        <h2 class="mb-3 font-weight-bold">Yuk, berbagi dan saling bantu sesama!</h2>
+        <p class="text-muted">
+          Kasih Kita adalah platform donasi dan kemanusiaan yang bertujuan membantu mereka yang membutuhkan.
+          Kami percaya bahwa sedikit bantuan bisa memberi harapan besar.
+        </p>
+      </div>
+      <div class="col-lg-6">
+        <h5 class="font-weight-bold">Mari Berbagi</h5>
+        <p class="text-muted">
+          Bergabunglah bersama komunitas peduli kami dalam menyebarkan kebaikan.
+          Mulai dari aksi kecil, hingga perubahan besar.
+        </p>
+        <div class="d-flex">
+          <a href="https://youtube.com/chibimarukochanbahasaindonesia" target="_blank" class="btn btn-outline-danger btn-sm mr-2">
+            <i class="fab fa-youtube"></i> YouTube
+          </a>
+          <a href="https://instagram.com/riskafrrb" target="_blank" class="btn btn-outline-warning btn-sm mr-2">
+            <i class="fab fa-instagram"></i> Instagram
+          </a>
+          <a href="https://twitter.com/usntwit" target="_blank" class="btn btn-outline-info btn-sm mr-2">
+            <i class="fab fa-twitter"></i> Twitter
+          </a>
+          <a href="https://tiktok.com/@usntt" target="_blank" class="btn btn-outline-dark btn-sm">
+            <i class="fab fa-tiktok"></i> TikTok
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
     <!-- Daftar Donasi -->
     <div class="container mt-5">
-        <h2 class="text-center">Donasi yang Sedang Berjalan</h2>
+        <h2 class="font-weight-bold text-center">Bantu Mereka</h2>
         <div class="row mt-4">
             <?php while ($row = $result->fetch_assoc()) { ?>
                 <div class="col-md-4">
@@ -100,7 +149,76 @@ $result = $db->query("SELECT * FROM pengajuan_donasi WHERE status = 'Disetujui'"
             <?php } ?>
         </div>
     </div>
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+ 
+        <!-- Footer Start -->
+        <footer style="background-color: #0b1f47;" class="text-white pt-5 pb-4 mt-5">
+      <div class="container">
+        <div class="row">
+          <!-- Kolom 1 -->
+          <div class="col-md-4">
+            <h5 class="text-uppercase mb-4 font-weight-bold text-white">Kasih Kita</h5>
+            <h6 class="text-light">Hubungi Kami</h6>
+            <p>kasihkita@gmail.com<br>Jl. yang penting jalan No. 777<br>Surabaya</p>
+          </div>
 
-    <?php include "layout/footer.html"; ?>
+          <!-- Kolom 2 -->
+          <div class="col-md-4">
+            <h5 class="text-uppercase mb-4 font-weight-bold text-white">Kategori Donasi</h5>
+            <ul class="list-unstyled">
+            <li><p class="text-light mb-1">Kesehatan</p></li>
+            <li><p class="text-light mb-1">Bencana Alam</p></li>
+            <li><p class="text-light mb-1">Yatim Piatu</p></li>
+            </ul>
+          </div>
+
+          <!-- Kolom 3 -->
+          <div class="col-md-4">
+            <h5 class="text-uppercase mb-4 font-weight-bold text-white">Tautan</h5>
+            <ul class="list-unstyled">
+              <li><a href="index.php" class="text-light" style="text-decoration: none;">Beranda</a></li>
+              <li><a href="#about" class="text-light" style="text-decoration: none;">Tentang Kami</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <hr class="mb-4">
+
+        <!-- Ikon Sosial Media -->
+        <div class="text-center mb-3">
+          <a href="https://youtube.com/chibimarukochanbahasaindonesia" class="text-white mx-2">
+            <i class="fab fa-youtube fa-lg border rounded-circle p-2"></i>
+          </a>
+          <a href="https://instagram.com/riskafrrb" class="text-white mx-2">
+            <i class="fab fa-instagram fa-lg border rounded-circle p-2"></i>
+          </a>
+          <a href="https://twitter.com/usntwit" class="text-white mx-2">
+            <i class="fab fa-twitter fa-lg border rounded-circle p-2"></i>
+          </a>
+          <a href="https://tiktok.com/@usntt" class="text-white mx-2">
+            <i class="fab fa-tiktok fa-lg border rounded-circle p-2"></i>
+          </a>
+        </div>
+
+        <p class="text-center text-muted small mb-0">
+          Dibuat dengan ❤️ oleh <a href="https://instagram.com/riskafrrb" class="text-info font-weight-bold" target="_blank">Kelompok 10</a>.
+        </p>
+      </div>
+    </footer>
+    <!-- Footer End -->
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+</body>
+</html>
+
 </body>
 </html>
