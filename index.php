@@ -72,7 +72,7 @@ $result = $db->query("SELECT * FROM pengajuan_donasi WHERE status = 'Disetujui'"
             background-color: #138496;
         }
         .bantu-section {
-    min-height: 70vh; /* atau pakai min-height */
+    height: 70vh; /* atau pakai min-height */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -118,6 +118,7 @@ $result = $db->query("SELECT * FROM pengajuan_donasi WHERE status = 'Disetujui'"
     -webkit-overflow-scrolling: touch;
     padding-bottom: 10px;
     padding-left: 10px;
+    
 }
 
 .donasi-wrapper::-webkit-scrollbar {
@@ -241,7 +242,7 @@ $result = $db->query("SELECT * FROM pengajuan_donasi WHERE status = 'Disetujui'"
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
  
         <!-- Footer Start -->
-        <footer style="background-color: #0b1f47;" class="text-white pt-5 pb-4 mt-5">
+        <footer style="background-color: #0b1f47;" class="text-white pt-5 pb-4 mt-0">
       <div class="container">
         <div class="row">
           <!-- Kolom 1 -->

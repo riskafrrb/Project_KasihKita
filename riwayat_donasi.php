@@ -1,28 +1,111 @@
+<!DOCTYPE html>
 <?php
+include 'service/database.php'; // koneksi ke database
 session_start();
-if (!isset($_SESSION["is_login"])) {
-    header("Location: index.php");
-    exit();
-}
-require "service/database.php";
 
-$user_id = $_SESSION["user_id"];
-$result = $db->query("SELECT * FROM pengajuan_donasi WHERE user_id = $user_id");
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit;
+}
+
+$user_id = $_SESSION['user_id'];
+
+$sql = "SELECT * FROM pengajuan_donasi WHERE user_id = $user_id ORDER BY id DESC";
+$result = mysqli_query($db, $sql);
+
+if (!$result) {
+    die("Query error: " . mysqli_error($db));
+}
 ?>
 
-<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Riwayat Donasi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap 4 -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Font Awesome (opsional) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        body {
+            background-color: #f9f9f9;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .container {
+            max-width: 900px;
+            margin-top: 60px;
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #1aa7b9;
+            font-weight: 700;
+            margin-bottom: 30px;
+        }
+        .table {
+            border-collapse: separate;
+            border-spacing: 0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .table th, .table td {
+            vertical-align: middle;
+            border: none;
+        padding: 14px 16px;
+        }
+
+        .badge-status {
+            padding: 6px 14px;
+            border-radius: 16px;
+            font-size: 0.85rem;
+        }
+
+        .btn-custom {
+            background-color: #1aa7b9;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 12px;
+            border: none;
+        }
+
+        .btn-custom:hover {
+            background-color: #1796a7;
+        }
+
+        .btn-outline-warning,
+        .btn-outline-danger {
+            border-radius: 12px;
+            padding: 6px 14px;
+        }
+
+        .btn-secondary {
+            padding: 10px 24px;
+            border-radius: 12px;
+        }
+
+        .table-hover tbody tr:hover {
+            background-color: #f0f0f0;
+            transition: background-color 0.3s ease;
+        }
+
+        .text-muted {
+            font-size: 0.9rem;
+        }
+    </style>
 </head>
 <body>
-    <div class="container mt-5">
+    <div class="container">
         <h2 class="text-center">Riwayat Pengajuan Donasi</h2>
-        <table class="table table-bordered">
-            <thead class="thead-dark">
+
+        <table class="table table-hover table-striped table-bordered mt-4">
+            <thead class="thead-light">
                 <tr>
                     <th>Judul</th>
                     <th>Kategori</th>
@@ -32,25 +115,37 @@ $result = $db->query("SELECT * FROM pengajuan_donasi WHERE user_id = $user_id");
                 </tr>
             </thead>
             <tbody>
+                
                 <?php while ($row = $result->fetch_assoc()) { ?>
                 <tr>
                     <td><?= htmlspecialchars($row["judul_donasi"]) ?></td>
                     <td><?= htmlspecialchars($row["kategori"]) ?></td>
                     <td>Rp <?= number_format($row["target_donasi"], 2, ",", ".") ?></td>
-                    <td><strong><?= htmlspecialchars($row["status"]) ?></strong></td>
+                    <td>
+                        <span class="badge-status badge 
+                            <?= $row["status"] === 'Disetujui' ? 'badge-success' : 
+                                ($row["status"] === 'Ditolak' ? 'badge-danger' : 'badge-secondary') ?>">
+                            <?= htmlspecialchars($row["status"]) ?>
+                        </span>
+                    </td>
                     <td>
                         <?php if ($row["status"] !== "Disetujui") { ?>
-                            <a href="edit_donasi.php?id=<?= $row["id"] ?>" class="btn btn-warning btn-sm">Edit</a>
-                            <a href="hapus_donasi.php?id=<?= $row["id"] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
+                            <a href="edit_donasi.php?id=<?= $row["id"] ?>" class="btn btn-outline-warning btn-sm">Edit</a>
+                            <a href="hapus_donasi.php?id=<?= $row["id"] ?>" class="btn btn-outline-danger btn-sm" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
                         <?php } else { ?>
-                            <span class="badge badge-success">Tidak dapat diedit</span>
+                            <span class="text-muted">-</span>
                         <?php } ?>
                     </td>
                 </tr>
                 <?php } ?>
             </tbody>
         </table>
-        <a href="user_dashboard.php" class="btn btn-secondary">Kembali</a>
+
+        <div class="text-center mt-4">
+            <a href="user_dashboard.php" class="btn btn-secondary">
+                <i class></i> Kembali
+            </a>
+        </div>
     </div>
 </body>
 </html>
