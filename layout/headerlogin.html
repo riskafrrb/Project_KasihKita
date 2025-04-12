@@ -11,21 +11,7 @@
         <ul class="navbar-nav ml-auto font-weight-bold">
             <li class="nav-item">
                 <a class="nav-link" href="index.php">Beranda</a>
-          <li class="nav-item">
-            <a href="#" class="nav-link text-dark font-weight-bold" onclick="confirmLogout()">Logout</a>
-          </li>
-          
-          <form id="logoutForm" action="logout.php" method="POST" style="display: none;">
-            <input type="hidden" name="logout" value="1">
-          </form>
-          
-          <script>
-            function confirmLogout() {
-              if (confirm("Apakah Anda yakin ingin logout?")) {
-                document.getElementById("logoutForm").submit();
-              }
-            }
-          </script>
+
                    
         </ul>
       </div>

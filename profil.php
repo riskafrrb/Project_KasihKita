@@ -1,16 +1,19 @@
 <?php
 session_start();
+
+// Cek apakah pengguna sudah login
 if (!isset($_SESSION["is_login"])) {
     header("Location: index.php");
     exit();
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard User - Kasih Kita</title>
+    <title>Profil Saya - Kasih Kita</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- FontAwesome -->
@@ -45,12 +48,12 @@ if (!isset($_SESSION["is_login"])) {
             font-weight: bold;
         }
 
-        .welcome-text h3 {
+        .profile-text h3 {
             color: #17a2b8;
             font-weight: bold;
         }
 
-        .welcome-text p {
+        .profile-text p {
             color: #dcdcdc;
         }
     </style>
@@ -60,48 +63,39 @@ if (!isset($_SESSION["is_login"])) {
     <?php include "layout/header.html"; ?>
 
     <div class="container">
-        <div class="text-center welcome-text mb-5">
-            <h3>Selamat datang, <span class="text-info"><?= htmlspecialchars($_SESSION["username"]); ?></span>!</h3>
-            <p style="color: #000000;">Silakan pilih fitur yang tersedia di bawah ini.</p>
+        <div class="text-center profile-text mb-5">
+            <h3>Profil Pengguna</h3>
+            <p><span class="text-dark">Selamat datang,</span> <span class="text-info"><?= htmlspecialchars($_SESSION["username"]); ?></span></p>
         </div>
 
         <div class="row">
-            <!-- Pengajuan Donasi -->
-            <div class="col-md-4 mb-4">
-                <div class="card card-custom h-100 text-center p-3">
-                    <div class="card-body">
-                        <i class="fas fa-hands-helping fa-3x mb-3 text-success"></i>
-                        <h5 class="card-title">Pengajuan Donasi</h5>
-                        <p class="card-text text-dark">Ajukan donasi baru untuk bantu sesama.</p>
-                        <a href="pengajuan_donasi.php" class="btn btn-outline-success btn-custom btn-sm">Akses</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Riwayat Donasi -->
-            <div class="col-md-4 mb-4">
-                <div class="card card-custom h-100 text-center p-3">
-                    <div class="card-body">
-                        <i class="fas fa-history fa-3x mb-3 text-warning"></i>
-                        <h5 class="card-title">Riwayat Donasi</h5>
-                        <p class="card-text text-dark">Lihat catatan dan status donasi kamu.</p>
-                        <a href="riwayat_donasi.php" class="btn btn-outline-warning btn-custom btn-sm">Lihat</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Profil Saya -->
-            <div class="col-md-4 mb-4">
+            <!-- Info Profil -->
+            <div class="col-md-6 mb-4">
                 <div class="card card-custom h-100 text-center p-3">
                     <div class="card-body">
                         <i class="fas fa-user-circle fa-3x mb-3 text-info"></i>
-                        <h5 class="card-title">Profil Saya</h5>
-                        <p class="card-text text-dark">Kelola data pribadi dan pengaturan akun.</p>
-                        <a href="profil.php" class="btn btn-outline-info btn-custom btn-sm">Buka</a>
+                        <h5 class="card-title">Nama Pengguna</h5>
+                        <p class="card-text text-dark"><?= htmlspecialchars($_SESSION["username"]); ?></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Info Lainnya -->
+            <div class="col-md-6 mb-4">
+                <div class="card card-custom h-100 text-center p-3">
+                    <div class="card-body">
+                        <i class="fas fa-envelope fa-3x mb-3 text-primary"></i>
+                        <h5 class="card-title">Email</h5>
+                        <p class="card-text text-dark"><?= htmlspecialchars($_SESSION["email"]); ?></p>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- Button untuk Kembali -->
+        <div class="text-center mt-4">
+    <a href="user_dashboard.php" class="btn btn-secondary">Kembali</a>
+</div>
     </div>
 
     <?php include "layout/footer.html"; ?>
