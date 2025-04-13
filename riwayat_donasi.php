@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php
 include 'service/database.php'; // koneksi ke database
 session_start();
@@ -10,7 +9,22 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
-$sql = "SELECT * FROM pengajuan_donasi WHERE user_id = $user_id ORDER BY id DESC";
+// Query untuk mengambil data pengajuan donasi dan menghitung total donasi
+$sql = "
+    SELECT 
+        pd.id, 
+        pd.judul_donasi, 
+        pd.kategori, 
+        pd.target_donasi, 
+        pd.status,
+        IFNULL(SUM(d.nominal), 0) AS total_donasi
+    FROM pengajuan_donasi pd
+    LEFT JOIN donasi d ON pd.id = d.id_donasi
+    WHERE pd.user_id = $user_id
+    GROUP BY pd.id
+    ORDER BY pd.id DESC
+";
+
 $result = mysqli_query($db, $sql);
 
 if (!$result) {
@@ -18,6 +32,7 @@ if (!$result) {
 }
 ?>
 
+<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -58,7 +73,7 @@ if (!$result) {
         .table th, .table td {
             vertical-align: middle;
             border: none;
-        padding: 14px 16px;
+            padding: 14px 16px;
         }
 
         .badge-status {
@@ -111,11 +126,11 @@ if (!$result) {
                     <th>Kategori</th>
                     <th>Target</th>
                     <th>Status</th>
+                    <th>Total Donasi</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
             <tbody>
-                
                 <?php while ($row = $result->fetch_assoc()) { ?>
                 <tr>
                     <td><?= htmlspecialchars($row["judul_donasi"]) ?></td>
@@ -128,6 +143,7 @@ if (!$result) {
                             <?= htmlspecialchars($row["status"]) ?>
                         </span>
                     </td>
+                    <td>Rp <?= number_format($row["total_donasi"], 2, ",", ".") ?></td>
                     <td>
                         <?php if ($row["status"] !== "Disetujui") { ?>
                             <a href="edit_donasi.php?id=<?= $row["id"] ?>" class="btn btn-outline-warning btn-sm">Edit</a>
@@ -143,7 +159,7 @@ if (!$result) {
 
         <div class="text-center mt-4">
             <a href="user_dashboard.php" class="btn btn-secondary">
-                <i class></i> Kembali
+                <i></i> Kembali
             </a>
         </div>
     </div>

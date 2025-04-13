@@ -1,6 +1,7 @@
 <?php
 include "service/database.php";
 $register_message = "";
+$register_color = "red"; // default warna merah untuk error
 session_start();
 
 if (isset($_SESSION["is_login"])) {
@@ -19,15 +20,19 @@ if (isset($_POST["register"])) {
     try {
         $sql = "INSERT INTO users (username, email, password, role) 
                 VALUES ('$username', '$email', '$hash_password', '$role')";
-
+    
         if ($db->query($sql)) {
             $register_message = "Pendaftaran berhasil, silakan login!";
+            $register_color = "blue"; // pesan sukses
         } else {
             $register_message = "Pendaftaran gagal, coba lagi!";
+            $register_color = "red"; // gagal (misalnya karena error DB)
         }
     } catch (mysqli_sql_exception) {
         $register_message = "Username atau Email sudah terdaftar, gunakan yang lain!";
+        $register_color = "red"; // duplikasi tetap merah
     }
+    
     $db->close();
 }
 ?>
@@ -80,7 +85,7 @@ if (isset($_POST["register"])) {
         }
 
         .register-message {
-            color: red;
+            color: blue;
             font-style: italic;
         }
     </style>
@@ -89,7 +94,7 @@ if (isset($_POST["register"])) {
     <?php include "layout/headerlogin.html"; ?>
     <div class="register-card text-center">
         <h3 class="mb-4">Daftar Akun</h3>
-        <p class="register-message"><?= $register_message ?></p>
+        <p class="register-message" style="color: <?= $register_color ?>;"><?= $register_message ?></p>
         <form action="register.php" method="POST">
     <div class="form-group">
         <input type="email" class="form-control" placeholder="Email" name="email" required />

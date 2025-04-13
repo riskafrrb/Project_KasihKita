@@ -110,7 +110,21 @@ if (isset($_POST['update_status'])) {
                             <td><?= htmlspecialchars($row["judul_donasi"]) ?></td>
                             <td><?= htmlspecialchars($row["kategori"]) ?></td>
                             <td>Rp <?= number_format($row["target_donasi"], 2, ",", ".") ?></td>
-                            <td><span class="badge badge-info"><?= htmlspecialchars($row["status"]) ?></span></td>
+                            <td>
+    <?php
+        $status = htmlspecialchars($row["status"]);
+        $badgeClass = "badge-secondary";
+        if ($status == "Pending") {
+            $badgeClass = "badge-warning";
+        } elseif ($status == "Disetujui") {
+            $badgeClass = "badge-success";
+        } elseif ($status == "Ditolak") {
+            $badgeClass = "badge-danger";
+        }
+    ?>
+    <span class="badge <?= $badgeClass ?>"><?= $status ?></span>
+</td>
+
                             <td>
                                 <form method="POST" class="form-inline">
                                     <input type="hidden" name="donasi_id" value="<?= $row['id'] ?>">

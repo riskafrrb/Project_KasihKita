@@ -226,7 +226,7 @@ $result = $db->query("SELECT * FROM pengajuan_donasi WHERE status = 'Disetujui'"
                 <p class="card-text"><strong>Kategori:</strong> <?= htmlspecialchars($row["kategori"]) ?></p>
                 <p class="card-text"><strong>Target:</strong> Rp <?= number_format($row["target_donasi"], 2, ",", ".") ?></p>
                 <p class="card-text"><?= nl2br(htmlspecialchars($row["deskripsi"])) ?></p>
-                <a href="detail_donasi.php?id=<?= $row["id"] ?>" class="btn btn-info btn-sm">Lihat Detail</a>
+                <a href="form_donasi.php?id=<?= $row["id"] ?>" class="btn btn-info btn-sm">Kirim Donasi</a>
             </div>
         </div>
     <?php } ?>
